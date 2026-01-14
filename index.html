@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Anushka ❤️</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3, #fcb1d1);
+      background-size: 300% 300%;
+      animation: bgMove 12s ease infinite;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      animation: floatUp linear infinite;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) scale(1); opacity: 1; }
+      to { transform: translateY(-120vh) scale(1.6); opacity: 0; }
+    }
+
+    /* Container */
+    .container {
+      padding: 30px 16px 90px;
+      text-align: center;
+      animation: fadeIn 2s ease;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      margin-bottom: 5px;
+      animation: slideDown 1.6s ease;
+    }
+
+    h2 {
+      font-weight: 300;
+      margin-top: 0;
+      opacity: 0.95;
+      animation: fadeIn 2.5s ease;
+    }
+
+    /* Message card */
+    .message {
+      max-width: 720px;
+      margin: 35px auto 25px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 22px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      animation: fadeInUp 2.5s ease;
+    }
+
+    /* Swipe hint */
+    .hint {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      opacity: 0.85;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Image gallery */
+    .gallery {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 20px 10px 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .gallery img {
+      min-width: 230px;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 24px;
+      scroll-snap-align: center;
+      box-shadow: 0 18px 36px rgba(0,0,0,0.35);
+      transition: transform 0.6s ease, box-shadow 0.6s ease;
+      animation: zoomIn 1.8s ease;
+    }
+
+    .gallery img:active {
+      transform: scale(1.05);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.45);
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 1.05rem;
+      opacity: 0.95;
+      animation: fadeIn 4s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideDown { from { transform: translateY(-40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* Mobile optimization */
+    @media (max-width: 600px) {
+      h1 { font-size: 2.5rem; }
+      .message { font-size: 1.03rem; padding: 20px; }
+      .gallery img { min-width: 210px; height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Happy Birthday Anushka 🎂</h1>
+    <h2>The most beautiful part of my life</h2>
+
+    <div class="message">
+      My love ❤️,<br /><br />
+      This day is special because it brought you into this world —
+      and my life has been brighter ever since.
+      You didn’t just become a part of my story,
+      you became the reason it feels complete.<br /><br />
+
+      Every smile of yours is magic,
+      every moment with you is a memory I hold close to my heart.
+      Thank you for being my happiness, my peace, and my greatest blessing.<br /><br />
+
+      On your birthday and every day after,
+      I promise to stand beside you, love you endlessly,
+      and choose you — always.<br /><br />
+
+      Happy Birthday, Anushka 💕<br />
+      My today. My tomorrow. My forever.
+    </div>
+
+    <div class="hint">Swipe to see our memories ⬅️➡️</div>
+
+    <div class="gallery">
+      <img src="images/us1.jpg" alt="Us together">
+      <img src="images/us2.jpg" alt="Our memory">
+      <img src="images/us3.jpg" alt="Love">
+    </div>
+
+    <footer>
+      Forever yours ❤️<br />
+      With all my love
+    </footer>
+  </div>
+
+  <!-- Floating hearts -->
+  <script>
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerText = Math.random() > 0.5 ? '❤️' : '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = 14 + Math.random() * 26 + 'px';
+      heart.style.animationDuration = 4 + Math.random() * 5 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 9000);
+    }
+
+    setInterval(createHeart, 350);
+  </script>
+
+</body>
+</html>
