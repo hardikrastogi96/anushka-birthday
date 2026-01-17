@@ -423,6 +423,8 @@
     @media (max-width: 600px) {
       h1 {
         font-size: 3rem;
+        text-align: center;
+        padding: 4px;
       }
 
       .message {
@@ -456,7 +458,7 @@
 
   <!-- Intro screen -->
   <div class="overlay" id="overlay">
-    <h1 style="font-size: 3rem; margin: 0;">Hey Birthday Girl!</h1>
+    <h1 style="font-size: 38px; margin: 0;">Hey Birthday Girl!</h1>
     <button onclick="startSurprise()">Tap to Open Your Surprise 🎁</button>
   </div>
 
@@ -510,23 +512,46 @@
   </div>
 
   <script>
-    const loveNotes = [
+    // Message Shuffle System to prevent repetition
+    class MessageManager {
+      constructor(messages) {
+        this.originalMessages = messages;
+        this.shuffled = [];
+      }
+
+      getNext() {
+        if (this.shuffled.length === 0) {
+          this.shuffled = [...this.originalMessages];
+          this.shuffleArray(this.shuffled);
+        }
+        return this.shuffled.pop();
+      }
+
+      shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+    }
+
+    const loveNotesManager = new MessageManager([
       "You are my happiest thought 💕",
       "Every day with you feels special ❤️",
       "My heart feels home when you smile 😊",
       "I choose you, always and forever 💍",
       "You make the world beautiful just by being in it ✨",
       "I love you more than words can say 💖"
-    ];
+    ]);
 
-    const wishes = [
+    const wishesManager = new MessageManager([
       "May all your dreams come true this year! 🌟",
       "Wishing you endless joy and laughter! 😄",
       "Here's to another year of us being awesome! 🥂",
       "May your day be as sweet as you are! 🎂",
       "Shine bright like the diamond you are! 💎",
-      "Sending you a giant hug and a kiss! �"
-    ];
+      "Sending you a giant hug and a kiss! 💋"
+    ]);
 
     function startSurprise() {
       const overlay = document.getElementById('overlay');
@@ -534,45 +559,53 @@
       overlay.style.opacity = '0';
       setTimeout(() => overlay.style.display = 'none', 1000);
 
-      // Play music here if available, or just trigger confetti
       fireConfetti();
-
-      // Start heart rain
       setInterval(createHeart, 300);
 
-      // Delay showing the main content
       setTimeout(() => {
         document.getElementById('mainContainer').classList.add('visible');
-        // Fire another burst when text appears
         fireConfetti();
-      }, 4000); // 4 seconds delay for the "1 or 2 images" effect
+      }, 4000);
     }
 
     function showLoveNote() {
-      showPopup(loveNotes, ['💌', '💝', '💖', '💘']);
+      showPopup(loveNotesManager.getNext(), ['💌', '💝', '💖', '💘']);
     }
 
     function showWish() {
-      showPopup(wishes, ['✨', '🎂', '🎉', '🌟']);
+      showPopup(wishesManager.getNext(), ['✨', '🎂', '🎉', '🌟']);
     }
 
-    function showPopup(sourceArray, emojis) {
+    // Timer variables to fix overlapping animations
+    let popupTimeout;
+    let hideTimeout;
+
+    function showPopup(message, emojis) {
       const popup = document.getElementById('popup');
       const text = document.getElementById('popup-text');
 
-      text.innerText = sourceArray[Math.floor(Math.random() * sourceArray.length)];
+      // Clear existing timers to prevent erratic behavior
+      if (popupTimeout) clearTimeout(popupTimeout);
+      if (hideTimeout) clearTimeout(hideTimeout);
+
+      // Set content
+      text.innerText = message;
       document.querySelector('.popup-emoji').innerText = emojis[Math.floor(Math.random() * emojis.length)];
 
+      // Show popup
       popup.style.display = 'block';
       // Trigger reflow
       void popup.offsetWidth;
       popup.classList.add('show');
 
-      fireConfetti(); // Little burst for the popup too!
+      fireConfetti();
 
-      setTimeout(() => {
+      // Set new timers
+      hideTimeout = setTimeout(() => {
         popup.classList.remove('show');
-        setTimeout(() => popup.style.display = 'none', 400);
+        popupTimeout = setTimeout(() => {
+          popup.style.display = 'none';
+        }, 400); // 400ms matches the CSS transition time
       }, 3500);
     }
 
